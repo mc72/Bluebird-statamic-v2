@@ -20,9 +20,9 @@ class BluebirdTags extends Tags
         
         $count  = $this->get('count', 5, 'is_numeric');
         $screen_name = $this->get('screen_name', null);
-        $include_rts  = $this->get('include_rts', true);
-        $include_entities  = $this->get('include_entities', true);
-        $exclude_replies  = $this->get('exclude_replies', false);
+        $include_rts  = $this->getBool('include_rts', true);
+        $include_entities  = $this->getBool('include_entities', true);
+        $exclude_replies  = $this->getBool('exclude_replies', false);
         $cache_length = $this->get('cache', 60); // Cache time in seconds
         // Check the cache before continuing. We don't want to hit the API on every request.
         $cached_tweets = $this->cache->get($screen_name);
@@ -58,16 +58,16 @@ class BluebirdTags extends Tags
             $query = array(
                 'count' => $count,
                 'screen_name' => $screen_name,
-                'include_rts' => $include_rts,
-                'exclude_replies' => $exclude_replies,
-                'include_entities' => $include_entities
+                'include_rts' => bool_str($include_rts),
+                'exclude_replies' => bool_str($exclude_replies),
+                'include_entities' => bool_str($include_entities)
             );
         } else {
             $query = array(
                 'count' => $count,
                 'screen_name' => $screen_name,
-                'include_rts' => $include_rts,
-                'include_entities' => $include_entities
+                'include_rts' => bool_str($include_rts),
+                'include_entities' => bool_str($include_entities)
             );
         }
         
